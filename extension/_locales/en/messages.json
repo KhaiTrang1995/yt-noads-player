@@ -1,0 +1,20 @@
+{
+  "appName": {
+    "message": "YT NoAds Player"
+  },
+  "appDesc": {
+    "message": "Save YouTube videos, playlists or mp3 links to your computer and listen or watch them ad-free. Requires the local helper."
+  },
+  "actionTitle": {
+    "message": "YT NoAds — add the video you're watching"
+  },
+  "cmdAddAudio": {
+    "message": "Add the open YouTube page (audio)"
+  },
+  "menuAudio": {
+    "message": "YT NoAds: add to listen (audio)"
+  },
+  "menuVideo": {
+    "message": "YT NoAds: add to watch (video)"
+  }
+}

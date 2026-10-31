@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>YT NoAds mini</title>
+  <link rel="stylesheet" href="mini.css">
+</head>
+<body>
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+
+  <main>
+    <header class="drag" id="drag">
+      <span class="grip" aria-hidden="true"></span>
+      <strong>YT NoAds</strong>
+      <span class="status" id="status" title="Helper"></span>
+      <button class="icon" id="expand" title="Mở trình phát đầy đủ" aria-label="Mở trình phát đầy đủ">⤢</button>
+      <button class="icon" id="hide" title="Thu nhỏ" aria-label="Thu nhỏ">—</button>
+    </header>
+
+    <section class="stage" id="stage">
+      <canvas id="viz" width="520" height="520" aria-hidden="true"></canvas>
+      <div class="vinyl" id="vinyl" aria-hidden="true">
+        <div class="label"><img id="cover" alt=""><span class="hole"></span></div>
+      </div>
+      <video id="media" playsinline preload="metadata"></video>
+    </section>
+
+    <div class="meta">
+      <div class="title-wrap"><h1 id="title">Chưa có bài nào</h1></div>
+      <p id="artist">Thêm video YouTube đang xem bên dưới</p>
+    </div>
+
+    <div class="seek">
+      <span id="cur">0:00</span>
+      <input type="range" id="progress" min="0" max="1000" value="0" aria-label="Tua">
+      <span id="dur">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button class="ctl" id="prev" aria-label="Bài trước"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button>
+      <button class="play" id="play" aria-label="Phát"><svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="ctl" id="next" aria-label="Bài sau"><svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+    </div>
+
+    <div class="row">
+      <label class="switch">
+        <input type="checkbox" id="autoplay" checked>
+        <span class="track"><span class="knob"></span></span>
+        <span>Nối bài</span>
+      </label>
+      <label class="vol" title="Âm lượng">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+        <input type="range" id="volume" min="0" max="100" value="100" aria-label="Âm lượng">
+      </label>
+    </div>
+
+    <section class="here" id="here" hidden>
+      <img id="hereThumb" alt="">
+      <div class="here-info">
+        <p class="here-label">Video đang mở</p>
+        <p class="here-title" id="hereTitle"></p>
+        <div class="here-bar" id="hereBar" hidden><span id="hereFill"></span></div>
+      </div>
+      <div class="here-actions" id="hereActions">
+        <button id="addAudio" title="Tải để nghe">Nghe</button>
+        <button id="addVideo" title="Tải để xem">Xem</button>
+      </div>
+      <button class="here-play" id="herePlay" hidden>▶ Phát</button>
+    </section>
+    <p class="msg" id="msg"></p>
+
+    <div class="listhead">
+      <span>Thư viện <span class="muted" id="count"></span></span>
+      <input id="filter" type="search" placeholder="Tìm…" aria-label="Tìm trong thư viện">
+    </div>
+    <ol class="list" id="list"></ol>
+
+    <div class="offline" id="offline" hidden>
+      <strong>Chưa kết nối helper</strong>
+      <span>Bật lại máy hoặc chạy <code>helper\start.bat</code></span>
+    </div>
+  </main>
+
+  <script type="module" src="mini.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+:root {
+  --bg: #121418;
+  --line: rgba(255, 255, 255, .09);
+  --glass: rgba(24, 26, 31, .62);
+  --text: #f2f4f7;
+  --muted: #a3aab4;
+  --accent: #7ddc8a;
+  --accent-2: #5fcfc4;
+  --danger: #f07167;
+  --pulse: 0;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.4 "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+/* Nền "ambient": ảnh bìa mờ trôi chậm, sáng lên theo nhịp bass */
+.ambient {
+  position: fixed; inset: -30%;
+  background: radial-gradient(circle at 30% 30%, #1f3a2a, transparent 60%),
+              radial-gradient(circle at 70% 70%, #163a3a, transparent 55%), var(--bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(46px) saturate(1.5) brightness(calc(.42 + var(--pulse) * .25));
+  animation: drift 26s ease-in-out infinite alternate;
+  transition: background-image .8s;
+}
+.ambient::after { content: ""; position: absolute; inset: 0; background: rgba(10, 11, 14, .35); }
+@keyframes drift {
+  from { transform: scale(1.05) rotate(0deg) translate(0, 0); }
+  to { transform: scale(1.18) rotate(8deg) translate(3%, -2%); }
+}
+
+main { position: relative; height: 100%; display: flex; flex-direction: column; padding: 0 16px 12px; }
+
+.drag {
+  display: flex; align-items: center; gap: 8px;
+  height: 40px; margin: 0 -16px; padding: 0 10px 0 14px;
+  cursor: grab; user-select: none;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, .18);
+}
+.drag:active { cursor: grabbing; }
+.drag strong { flex: 1; font-size: 13px; letter-spacing: .3px; }
+.grip { width: 10px; height: 14px; background: radial-gradient(circle, #7a818b 1.2px, transparent 1.6px) 0 0 / 5px 5px; }
+.status { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+.status.on { background: var(--accent); box-shadow: 0 0 8px rgba(125, 220, 138, .7); }
+.status.off { background: var(--danger); }
+.icon { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); }
+.icon:hover { background: rgba(255, 255, 255, .08); color: var(--text); }
+
+/* ---- Đĩa than + visualizer ---- */
+.stage { position: relative; height: 236px; display: grid; place-items: center; margin-top: 6px; flex: none; }
+#viz { position: absolute; width: 260px; height: 260px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.vinyl {
+  position: relative;
+  width: 158px; aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    conic-gradient(from 210deg, transparent 0 20deg, rgba(255,255,255,.07) 30deg, transparent 45deg,
+                   transparent 200deg, rgba(255,255,255,.05) 215deg, transparent 230deg),
+    repeating-radial-gradient(circle, #121315 0 1.6px, #18191c 1.6px 3.2px), #111214;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .6),
+              0 0 calc(8px + var(--pulse) * 46px) rgba(125, 220, 138, calc(.1 + var(--pulse) * .45));
+  transform: scale(calc(1 + var(--pulse) * .045));
+  transition: transform .08s linear;
+}
+.label {
+  position: relative; width: 40%; aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid; place-items: center;
+  animation: spin 5s linear infinite;
+  animation-play-state: paused;
+}
+.vinyl.spinning .label { animation-play-state: running; }
+.label img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.label img:not([src]) { display: none; }
+.hole { position: relative; width: 16%; aspect-ratio: 1; border-radius: 50%; background: #0c0d0f; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+video { display: none; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; background: #000; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+.stage.video { height: auto; margin: 12px 0 4px; }
+.stage.video video { display: block; }
+.stage.video .vinyl, .stage.video #viz { display: none; }
+
+/* ---- Tiêu đề chạy chữ khi dài ---- */
+.meta { margin-top: 4px; text-align: center; }
+.title-wrap { overflow: hidden; white-space: nowrap; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.meta h1 { display: inline-block; margin: 0; padding: 0 10px; font-size: 16px; font-weight: 650; }
+.meta h1.marquee { animation: marquee var(--marquee-time, 12s) ease-in-out infinite alternate; }
+@keyframes marquee { 0%, 15% { transform: translateX(0); } 85%, 100% { transform: translateX(var(--marquee-shift, -50%)); } }
+.meta p { margin: 2px 0 0; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta.swap { animation: swap .45s ease; }
+@keyframes swap { from { opacity: 0; transform: translateY(6px); } }
+
+.seek { display: flex; align-items: center; gap: 10px; margin: 10px 0 6px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.seek span { min-width: 34px; }
+.seek span:last-child { text-align: right; }
+input[type="range"] {
+  flex: 1; height: 4px; appearance: none; border-radius: 99px; outline: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) 0 / var(--pct, 0%) 100% no-repeat, rgba(255,255,255,.14);
+}
+input[type="range"]::-webkit-slider-thumb { appearance: none; width: 13px; height: 13px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(125,220,138,.35); }
+
+.controls { display: flex; justify-content: center; align-items: center; gap: 22px; }
+.ctl { width: 42px; height: 42px; border-radius: 50%; border: 0; background: rgba(255,255,255,.07); display: grid; place-items: center; }
+.ctl:hover { background: rgba(255,255,255,.14); }
+.ctl svg { width: 20px; height: 20px; fill: var(--text); }
+.play {
+  width: 60px; height: 60px; border-radius: 50%; border: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid; place-items: center;
+  box-shadow: 0 8px calc(22px + var(--pulse) * 30px) rgba(125, 220, 138, calc(.35 + var(--pulse) * .3));
+  transition: transform .1s;
+}
+.play:active { transform: scale(.94); }
+.play svg { width: 26px; height: 26px; fill: #0d1a10; }
+
+.row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 8px; }
+.switch { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; user-select: none; }
+.switch input { position: absolute; opacity: 0; pointer-events: none; }
+.switch .track { width: 34px; height: 20px; border-radius: 99px; background: rgba(255,255,255,.14); position: relative; transition: background .15s; }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #c8ccd2; transition: transform .15s, background .15s; }
+.switch input:checked + .track { background: #2f5c39; }
+.switch input:checked + .track .knob { transform: translateX(14px); background: var(--accent); }
+.vol { display: flex; align-items: center; gap: 6px; width: 120px; }
+.vol svg { width: 16px; height: 16px; fill: var(--muted); flex: none; }
+.vol input { flex: none; width: 92px; }
+
+/* ---- Video đang mở trên YouTube ---- */
+.here {
+  display: flex; gap: 10px; align-items: center;
+  padding: 8px; border-radius: 12px;
+  background: var(--glass); border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  animation: swap .35s ease;
+}
+.here img { width: 56px; height: 32px; border-radius: 6px; object-fit: cover; flex: none; }
+.here-info { flex: 1; min-width: 0; }
+.here-label { margin: 0; font-size: 11px; color: var(--muted); }
+.here-title { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+.here-bar { margin-top: 5px; height: 3px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; }
+.here-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .4s; }
+.here-actions { display: flex; gap: 6px; }
+.here-actions button, .here-play {
+  padding: 6px 10px; border-radius: 9px; border: 1px solid rgba(125,220,138,.35);
+  background: rgba(125,220,138,.12); color: var(--accent); font-weight: 600; font-size: 12px;
+}
+.here-actions button:hover, .here-play:hover { background: rgba(125,220,138,.22); }
+button:disabled { opacity: .5; cursor: progress; }
+
+.msg { min-height: 1.2em; margin: 4px 2px 0; font-size: 12px; color: var(--accent); }
+.msg.error { color: var(--danger); }
+
+/* ---- Thư viện ---- */
+.listhead { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 6px; color: var(--muted); font-weight: 600; }
+.muted { font-weight: 400; opacity: .7; }
+.listhead input { width: 120px; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,.25); outline: none; }
+.list { list-style: none; margin: 0; padding: 0; flex: 1; min-height: 60px; overflow-y: auto; }
+.list li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px; border-radius: 9px; cursor: pointer; color: #d4d8de;
+  transition: background .15s;
+}
+.list li:hover { background: rgba(255,255,255,.06); }
+.list li.active { color: var(--accent); background: rgba(125,220,138,.08); }
+.list .name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list .time { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.tag { font-size: 10px; padding: 1px 5px; border-radius: 5px; background: rgba(120,170,240,.18); color: #a9cbf7; }
+/* 3 vạch nhảy cạnh bài đang phát */
+.eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; width: 12px; }
+.eq i { width: 3px; background: var(--accent); border-radius: 1px; animation: eq 1s ease-in-out infinite; }
+.eq i:nth-child(2) { animation-delay: -.4s; }
+.eq i:nth-child(3) { animation-delay: -.7s; }
+.paused .eq i { animation-play-state: paused; }
+@keyframes eq { 0%, 100% { height: 3px; } 50% { height: 12px; } }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 6px; }
+
+.offline {
+  position: absolute; left: 16px; right: 16px; top: 52px;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border-radius: 10px;
+  background: rgba(60, 22, 20, .92); color: #f3b1aa; font-size: 12px;
+}
+.offline strong { color: #ffd1cc; }
+.offline code { color: var(--text); }

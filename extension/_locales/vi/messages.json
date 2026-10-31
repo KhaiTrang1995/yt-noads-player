@@ -1,0 +1,20 @@
+{
+  "appName": {
+    "message": "YT NoAds Player"
+  },
+  "appDesc": {
+    "message": "Lưu video, playlist YouTube hoặc link mp3 về máy rồi nghe/xem không quảng cáo. Cần chạy helper trên máy."
+  },
+  "actionTitle": {
+    "message": "YT NoAds — thêm video đang xem"
+  },
+  "cmdAddAudio": {
+    "message": "Thêm trang YouTube đang mở (nghe)"
+  },
+  "menuAudio": {
+    "message": "YT NoAds: thêm để nghe (audio)"
+  },
+  "menuVideo": {
+    "message": "YT NoAds: thêm để xem (video)"
+  }
+}

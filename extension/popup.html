@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>YT NoAds</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="icons/icon48.png" alt="" width="24" height="24">
+    <strong>YT NoAds</strong>
+    <span class="status" id="status" title="Helper"></span>
+  </header>
+
+  <section class="page" id="page">
+    <img class="thumb" id="thumb" alt="">
+    <div class="info">
+      <p class="label" id="pageLabel">Trang đang mở</p>
+      <p class="title" id="pageTitle">…</p>
+    </div>
+  </section>
+
+  <div class="actions" id="actions">
+    <button class="primary" id="addAudio">Nghe không ads</button>
+    <button class="secondary" id="addVideo">Xem không ads</button>
+  </div>
+  <button class="play" id="playNow" hidden>▶ Phát ngay trong trình phát</button>
+
+  <form id="manual">
+    <input id="url" type="url" placeholder="Hoặc dán link khác…" autocomplete="off">
+  </form>
+
+  <p class="msg" id="msg"></p>
+  <ul class="jobs" id="jobs"></ul>
+
+  <div class="offline" id="offline" hidden>
+    Chưa kết nối helper. Mở <code>start.bat</code> trong thư mục <code>helper</code>.
+  </div>
+
+  <footer>
+    <button class="link" id="toggleMini" hidden>Trình phát nổi trên trang</button>
+    <button class="link" id="openPlayer">Mở trình phát →</button>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

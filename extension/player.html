@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YT NoAds Player</title>
+  <link rel="icon" href="icons/icon48.png">
+  <link rel="stylesheet" href="player.css">
+</head>
+<body>
+  <main class="card" id="player">
+    <div class="stage" id="stage">
+      <div class="vinyl" id="vinyl" aria-hidden="true">
+        <div class="label" id="label"><img id="cover" alt=""><span class="hole"></span></div>
+      </div>
+      <video id="media" playsinline preload="metadata"></video>
+    </div>
+
+    <div class="meta">
+      <h1 id="title">Chưa có bài nào</h1>
+      <p id="artist">Bấm “Thư viện” để thêm nhạc từ link</p>
+    </div>
+
+    <div class="seek">
+      <span id="cur">0:00</span>
+      <input type="range" id="progress" min="0" max="1000" value="0" aria-label="Tua">
+      <span id="dur">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prev">Trước</button>
+      <button class="play" id="play" aria-label="Phát"><svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="btn" id="next">Sau</button>
+    </div>
+
+    <div class="row">
+      <label class="switch">
+        <input type="checkbox" id="autoplay" checked>
+        <span class="track"><span class="knob"></span></span>
+        <span>Tự động nối bài</span>
+      </label>
+      <button class="btn small" id="openLib">Thư viện</button>
+    </div>
+
+    <ol class="queue" id="queue"></ol>
+    <p class="empty" id="queueEmpty" hidden>Thư viện trống. Dán link YouTube vào “Thư viện” để bắt đầu.</p>
+
+    <div class="offline" id="offline" hidden>
+      <h2>Chưa kết nối helper</h2>
+      <p>Extension cần helper chạy trên máy để tải nhạc. Mở thư mục <code>helper</code> và chạy <code>start.bat</code>, rồi bấm Thử lại.</p>
+      <button class="btn small" id="retry">Thử lại</button>
+    </div>
+  </main>
+
+  <div class="overlay" id="libOverlay" hidden>
+    <section class="card lib" role="dialog" aria-modal="true" aria-labelledby="libTitle">
+      <header>
+        <h2 id="libTitle">Thư viện</h2>
+        <button class="btn small" id="closeLib">Đóng</button>
+      </header>
+
+      <form id="addForm">
+        <label class="section" for="url">Thêm nhạc từ link</label>
+        <div class="add">
+          <input id="url" type="url" placeholder="Link video, playlist YouTube, hoặc URL mp3" autocomplete="off" required>
+          <button class="primary" type="submit" id="addBtn">Tải</button>
+        </div>
+        <div class="modes" role="radiogroup" aria-label="Kiểu tải">
+          <label><input type="radio" name="mode" value="audio" checked><span>Nghe (audio)</span></label>
+          <label><input type="radio" name="mode" value="video"><span>Xem (video)</span></label>
+        </div>
+        <p class="msg" id="addMsg"></p>
+      </form>
+
+      <div id="jobsBox" hidden>
+        <h3 class="section">Đang tải <span class="muted" id="jobsCount"></span></h3>
+        <ul class="jobs" id="jobs"></ul>
+      </div>
+
+      <div>
+        <div class="libhead">
+          <h3 class="section">Bài trong thư viện <span class="muted" id="libCount">(0)</span></h3>
+          <input id="filter" type="search" placeholder="Tìm…" aria-label="Tìm trong thư viện">
+        </div>
+        <ul class="library" id="library"></ul>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="player.js"></script>
+</body>
+</html>
