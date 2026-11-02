@@ -39,6 +39,7 @@
 - [Cấu trúc dự án](#cấu-trúc-dự-án)
 - [Phát triển](#phát-triển)
 - [Hỏi đáp](#hỏi-đáp)
+- [Ủng hộ](#ủng-hộ)
 - [Giấy phép](#giấy-phép)
 
 ## Tính năng
@@ -252,6 +253,15 @@ Muốn xem YouTube không quảng cáo ngay trên trang, hãy cân nhắc YouTub
 **Firefox thì sao?**
 Chưa thử. Mã nguồn là Manifest V3 và phần lớn dùng lại được, nhưng Firefox MV3 khác ở vài chỗ
 (background script, `runtime.getContexts`) nên cần chỉnh thêm. Rất hoan nghênh PR.
+
+## Ủng hộ
+
+Nếu công cụ giúp ích cho bạn, bạn có thể ủng hộ để dự án tiếp tục phát triển:
+
+[![GitHub Sponsors](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/KhaiTrang1995)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-techspherex-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/techspherex)
+
+Tặng sao, báo lỗi hay gửi pull request cũng là cách ủng hộ rất quý.
 
 ## Giấy phép
 

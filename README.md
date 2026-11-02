@@ -39,6 +39,7 @@ English · [Tiếng Việt](README.vi.md)
 - [Project structure](#project-structure)
 - [Development](#development)
 - [FAQ](#faq)
+- [Support](#support)
 - [License](#license)
 
 ## Features
@@ -253,6 +254,15 @@ In `~/YTNoAdsPlayer/media` (Windows: `C:\Users\<you>\YTNoAdsPlayer\media`). They
 **Firefox?**
 Not tested. The code is Manifest V3 and mostly portable, but Firefox MV3 differences
 (background scripts, `runtime.getContexts`) would need work. PRs welcome.
+
+## Support
+
+If this saves you time, you can support development:
+
+[![GitHub Sponsors](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/KhaiTrang1995)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-techspherex-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/techspherex)
+
+Stars, bug reports and pull requests are just as welcome.
 
 ## License
 
